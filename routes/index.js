@@ -40,8 +40,24 @@ exports.showMongo = function(req, res){
       }
       res.render('mongo', {
         title : 'mongo example',
-        list: results
+        list  : results
       });
     });
   });
-}
+};
+
+// save posted data
+exports.saveMongo = function(req, res) {
+  var name = req.param('name');
+  client.collection('webdbtest', function(err,collection){
+    if(err){
+      throw err;
+    }
+    collection.save({name:name}, function(err){
+      if(err){
+        throw err;
+      }
+      res.redirect('/mongo');
+    });
+  });
+};
